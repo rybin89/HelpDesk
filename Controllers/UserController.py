@@ -1,5 +1,5 @@
 from Models.User import User
-
+from bcrypt import hashpw,gensalt, checkpw
 
 class UserController:
     '''
@@ -26,9 +26,11 @@ class UserController:
             иначе - возвращаем сообщение о созданном пользователе
         '''
         try:
+            hash_password = hashpw(password.encode('utf-8'), gensalt()) # введённый прароль
+            print(hash_password)
             User.create(
                 login = login,
-                password = password,
+                password = hash_password,
                 role = role
             )
             return f'Пользователь {login} с ролью {role} добавлен'
@@ -80,25 +82,40 @@ class UserController:
         '''
         # user = User.select().where(User.login == login)[0]
         user = User.get_or_none(User.login==login)
-        print(user)
+
         if user:
-            if user.password == password:
+            hash_password = user.password
+            if checkpw(password.encode('utf-8'),hash_password.encode('utf-8')):
                 return "Есть такой пользователь"
 
         return 'Неверный логин или пароль'
+    @classmethod
+    def test_hesh(cls, password):
+#             Хештруем проль password
+        print(password)
+        password = bytes(password,'utf-8')
+        hashed = hashpw(password,gensalt())
+        print(hashed)
+        if checkpw(password,hashed):
+            print('Работет')
+
+
 
 
 
 
 
 if __name__ == "__main__":
-    # print(UserController.registration(
-    #     login='admin1',
-    #     password='admin',
-    #     role='Администратор'
-    # ))
+    print(UserController.registration(
+        login='user',
+        password='user'
+    ))
     # print(UserController.update(2,login = "admin2"))
     # print(UserController.update_status(2))
-    print(UserController.auth('admin','admin'))
-    for row in UserController.get():
-        print(row.id, row.login, row.password, row.role, row.is_active, row.fullname)
+    # UserController.test_hesh('1234')
+    # print(UserController.auth('admin','admin'))
+    # for row in UserController.get():
+    #     print(row.id, row.login, row.password, row.role, row.is_active, row.fullname)
+
+    print(UserController.auth('user','user'))
+
