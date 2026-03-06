@@ -114,8 +114,8 @@ if __name__ == "__main__":
     # print(UserController.update_status(2))
     # UserController.test_hesh('1234')
     # print(UserController.auth('admin','admin'))
-    # for row in UserController.get():
-    #     print(row.id, row.login, row.password, row.role, row.is_active, row.fullname)
+    for row in UserController.get():
+        print(row.id, row.login, row.password, row.role, row.is_active, row.fullname)
 
     print(UserController.auth('user','user'))
 

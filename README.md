@@ -22,7 +22,53 @@ _Краткое наименование: __ИС «TechSupport»___
         - 'Специалист'
 + Task
 + Category
+### Структура проекта 
+```
+HelpDesk/
+|--Connection/
+|   
+
+```
 
 
+### Модели
 
+#### User (Пользователи)
+- `id` - первичный ключ
+- `login` - логин уникальный, максимум 12 символов
+- `password` - первичный ключ
+- `role` - хешированный пароль
+- `role` - роль пользователя: 'Пользователь','Администратор','Специалист'
+- `is_active` - при создании True, Альтернатива удаления
+- `fullname` - полное имя пользователя, максимум 150 символов 
 
+#### Task (Заявки)
+...
+
+## Уставка
+1. Все библиотеки указаны в файле `requirements.txt` 
+2. Полключение к БД в `Connection/connect.py`
+3. Создать таблицы в БД с помощью 
+   ```bash
+   python Models/create_table.py
+   ```
+   
+## Функционал кода
+### Работа с пользователями
+отвечает UserController
+```python
+# регистрация пользователя администратор
+from Controllers.UserController import UserController
+UserController.registration(
+        login='user',
+        password='user'
+    )
+# вывод списка пользователей
+for row in UserController.get():
+    print(row.id, row.login, row.password, row.role, row.is_active, row.fullname)
+# обновить данные пользователей
+UserController.update(2,login = "admin2")
+```
+
+## Лицензия
+Проект находится в разработке
