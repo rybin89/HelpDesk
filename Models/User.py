@@ -1,5 +1,6 @@
 from Models.Base import *
 
+
 class User(Base):
     id = PrimaryKeyField()
     login = CharField(unique=True,max_length=12)

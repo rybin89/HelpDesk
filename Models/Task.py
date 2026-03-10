@@ -21,10 +21,12 @@ class Task(Base):
         choices=[
             'Новая',
             'В работе',
-            'Выполнена'
+            'Выполнена',
+            'Отклонена',
+            'Ожидает ответа пользователя'
         ]
     )
     user_id = ForeignKeyField(model=User, on_delete=CASCADE,on_update=CASCADE)
-    speciality_id = ForeignKeyField(model=User,on_delete=CASCADE,on_update=CASCADE)
+    speciality_id = ForeignKeyField(model=User,on_delete=CASCADE,on_update=CASCADE, null=True)
     category_id = ForeignKeyField(model=Category,on_delete=CASCADE,on_update=CASCADE)
 

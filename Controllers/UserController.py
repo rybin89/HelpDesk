@@ -18,6 +18,7 @@ class UserController:
     @classmethod
     def registration(cls, login, password,role = 'Пользователь'):
         '''
+        Регистрация пользователя
         :param login:  логин пользователя не более 10 символов, должен быть уникален
         :param password: пароль в будущем должен быть в виде HASH пароль
         :param role: роль в системе, если не указана, то: "Пользователь"
