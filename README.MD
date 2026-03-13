@@ -64,6 +64,11 @@ HelpDesk/
 ...
 ##### Category (категорий)
 ...
+#### KnowledgeBase (База Знаний)
+- `id` - первичный ключ
+- `query` - запрос пользователя в виде  хэша
+- `response` - ответ на вопрос
+- `text_query` - текст вопроса для теста
 
 #### Контроллеры
 За работу с пользователями отвечает `Controllers/UserController.py`
@@ -82,7 +87,26 @@ for row in UserController.get():
 UserController.auth('user','user')
 
 ```
-
+За работу с Базой Знаний отвечает `Controllers/KnowledgeBaseController.py`
+```python
+# вывод записей отвечает метод get()
+from Controllers.KnowledgeBaseController import KnowledgeBaseController
+for row in KnowledgeBaseController.get():
+    print(
+           row.id,
+           row.query,
+           row.response,
+           row.text_query,
+        )
+# Удаление записей выполняет метод delete(id) оп id записи
+KnowledgeBaseController.delete(9)
+# Создание записи, создаётся хэш аргумента text_query, выполняется поиск этого хэша в тадлице
+# если не найден то добавляется запись с новыми text_query и response, иначе пропуск
+KnowledgeBaseController.add(
+        text_query='Что такое файл ',
+        response='это именованная область диска'
+    )
+```
 
 ### Уставка
 1. Все библиотеки указаны в файле `requirements.txt`
